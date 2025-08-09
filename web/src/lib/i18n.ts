@@ -47,6 +47,12 @@ export const i18nStrings: Record<Locale, Record<string, string>> = {
     typeCommand: "command",
     typeTemplate: "template",
     tmplStory: "Mẫu Story",
+    glossaryTitle: "Thuật ngữ",
+    glossarySearchPlaceholder: "Tìm thuật ngữ hoặc bí danh",
+    openGlossary: "Mở/Đóng Glossary",
+    docOut: "Doc out",
+    docOutStub: "Doc-out stub: chưa nối BE",
+    previewTitle: "Xem trước tài liệu",
   },
   en: {
     appTitle: "Bmad Donglao",
@@ -86,6 +92,12 @@ export const i18nStrings: Record<Locale, Record<string, string>> = {
     typeCommand: "command",
     typeTemplate: "template",
     tmplStory: "Story Template",
+    glossaryTitle: "Glossary",
+    glossarySearchPlaceholder: "Search terms or aliases",
+    openGlossary: "Toggle Glossary",
+    docOut: "Doc out",
+    docOutStub: "Doc-out stub: not connected to BE yet",
+    previewTitle: "Document Preview",
   },
 };
 
