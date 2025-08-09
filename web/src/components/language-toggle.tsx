@@ -17,16 +17,9 @@ export function LanguageToggle() {
       <span className="text-sm text-muted-foreground">vi</span>
       <button
         type="button"
-        role="switch"
-        aria-checked={isEn}
+        aria-pressed={isEn}
         aria-label="Toggle language"
         onClick={handleChange}
-        onKeyDown={(e) => {
-          if (e.key === "Enter" || e.key === " ") {
-            e.preventDefault();
-            handleChange();
-          }
-        }}
         className="relative h-6 w-12 rounded-full bg-muted transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
       >
         <span
