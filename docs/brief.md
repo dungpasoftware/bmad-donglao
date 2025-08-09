@@ -12,6 +12,14 @@ title: "Project Brief: BMAD Brainstorming Web UI"
 ---
 
 
+# Change Log
+
+| Date       | Version | Description                                                | Author |
+|------------|---------|------------------------------------------------------------|--------|
+| 2025-08-09 | 0.2     | Đồng bộ Technology Preferences: Next.js 15, React 19 (FE) | PO     |
+
+---
+
 # MVP Scope
 
 ## Core Features (Must Have)
@@ -76,7 +84,7 @@ Rationale (ngắn)
 - Performance: API TTFB ≤ 200ms (local), LCP ≤ 2.5s (trang chính), RUM tối giản
 
 ## Technology Preferences
-- Frontend: Next.js 14 (App Router), React 18, TypeScript, UI: TailwindCSS + shadcn/ui, Command Palette, Drawer Chat
+- Frontend: Next.js 15 (App Router), React 19, TypeScript, UI: TailwindCSS + shadcn/ui, Command Palette, Drawer Chat
 - Backend: Node 20, Next.js API routes (hoặc Express trong Next), Orchestrator service map UI → BMAD (agents/tasks/templates), ghi files
 - Database: Không dùng DB cho MVP; “files‑only” (docs/, .bmad‑core/...). Phase 2: SQLite/Postgres cho session/telemetry
 - Hosting/Infra: Dev cục bộ. Prod: container/VM. Lưu ý nền tảng ephemeral FS (VD: Vercel) không phù hợp “files‑only” → cân nhắc self‑host/Git commit bot/S3

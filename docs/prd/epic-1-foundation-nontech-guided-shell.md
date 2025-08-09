@@ -7,7 +7,7 @@ Stories
 
 ## Story 1.1: Project scaffold & tooling
 Acceptance Criteria
-1. Next.js 14 + React 18 + TypeScript khởi tạo, build OK
+1. Next.js 15 + React 19 + TypeScript khởi tạo, build OK
 2. TailwindCSS + shadcn/ui cài đặt, style hoạt động
 3. ESLint + type‑check pass; cấu trúc repo giữ `docs/` và `.bmad-core/...`
 
