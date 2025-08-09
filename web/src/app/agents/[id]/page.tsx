@@ -1,14 +1,25 @@
-"use client";
-
-import { useMemo } from "react";
 import { AgentsSidebar } from "@/components/sidebar/AgentsSidebar";
 import { AgentHeader } from "@/components/agent/AgentHeader";
 import { ActionCard } from "@/components/action/ActionCard";
-import { getAgentById, type AgentId } from "@/lib/agents";
+import { getAgentById, isAgentId } from "@/lib/agents";
 
-export default function AgentPage({ params }: { params: { id: AgentId } }) {
-  const agent = useMemo(() => getAgentById(params.id), [params.id]);
+type PageProps = { params: Promise<{ id?: string | string[] | undefined }> };
 
+export default async function AgentPage({ params }: PageProps) {
+  const resolved = (await params) ?? {};
+  const idParam = Array.isArray(resolved.id) ? resolved.id[0] : resolved.id;
+  if (!idParam || !isAgentId(idParam)) {
+    return (
+      <main className="min-h-screen flex">
+        <AgentsSidebar />
+        <section className="flex-1 p-6">
+          <p>Agent not found.</p>
+        </section>
+      </main>
+    );
+  }
+
+  const agent = getAgentById(idParam);
   if (!agent) {
     return (
       <main className="min-h-screen flex">

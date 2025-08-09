@@ -18,12 +18,6 @@ export function ActionCard({ command }: { command: AgentCommand }) {
     <button
       type="button"
       onClick={onActivate}
-      onKeyDown={(e) => {
-        if (e.key === "Enter" || e.key === " ") {
-          e.preventDefault();
-          onActivate();
-        }
-      }}
       className="text-left w-full focus:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded"
       aria-label={t(command.titleKey, locale)}
     >
