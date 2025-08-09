@@ -4,6 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { useLocale } from "@/components/providers/locale-provider";
 import { t } from "@/lib/i18n";
 import Link from "next/link";
+import { GlossaryTooltip } from "@/components/glossary/GlossaryTooltip";
 
 export default function Home() {
   const { locale } = useLocale();
@@ -12,7 +13,12 @@ export default function Home() {
       <Card className="max-w-md w-full">
         <CardHeader>
           <CardTitle>{t("appTitle", locale)}</CardTitle>
-          <CardDescription>{t("appDescription", locale)}</CardDescription>
+          <CardDescription>
+            {t("appDescription", locale)} — 
+            <GlossaryTooltip termId="agent">agent</GlossaryTooltip>, 
+            <GlossaryTooltip termId="command">command</GlossaryTooltip>, 
+            <GlossaryTooltip termId="template">template</GlossaryTooltip>
+          </CardDescription>
         </CardHeader>
         <CardContent className="flex gap-3">
           <Button variant="default">{t("primary", locale)}</Button>
