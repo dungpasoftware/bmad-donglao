@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { LocaleProvider } from "@/components/providers/locale-provider";
-import { LanguageToggle } from "@/components/language-toggle";
+import { HeaderControls } from "@/components/HeaderControls";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -32,7 +32,7 @@ export default function RootLayout({
       >
         <LocaleProvider>
           <header className="w-full flex justify-end p-4">
-            <LanguageToggle />
+            <HeaderControls />
           </header>
           {children}
         </LocaleProvider>
