@@ -1,13 +1,13 @@
-"use client";
-
-import { useMemo } from "react";
 import { AgentsSidebar } from "@/components/sidebar/AgentsSidebar";
 import { AgentHeader } from "@/components/agent/AgentHeader";
 import { ActionCard } from "@/components/action/ActionCard";
-import { getAgentById, type AgentId } from "@/lib/agents";
+import { getAgentById, isAgentId } from "@/lib/agents";
 
-export default function AgentPage({ params }: { params: { id: AgentId } }) {
-  const agent = useMemo(() => getAgentById(params.id), [params.id]);
+type PageProps = { params: { id: string } };
+
+export default function AgentPage({ params }: PageProps) {
+  const idParam = Array.isArray(params?.id) ? params.id[0] : params?.id;
+  const agent = isAgentId(idParam) ? getAgentById(idParam) : undefined;
 
   if (!agent) {
     return (

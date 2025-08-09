@@ -1,5 +1,3 @@
-import { type Locale } from "@/lib/i18n";
-
 export type AgentId = "sm";
 
 export type AgentCommandId =
@@ -43,6 +41,10 @@ export const agents: Agent[] = [
 
 export function getAgentById(id: AgentId): Agent | undefined {
   return agents.find((a) => a.id === id);
+}
+
+export function isAgentId(value: string): value is AgentId {
+  return value === "sm";
 }
 
 
