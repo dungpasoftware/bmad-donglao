@@ -3,12 +3,23 @@ import { AgentHeader } from "@/components/agent/AgentHeader";
 import { ActionCard } from "@/components/action/ActionCard";
 import { getAgentById, isAgentId } from "@/lib/agents";
 
-type PageProps = { params: { id: string } };
+type PageProps = { params: Promise<{ id?: string | string[] | undefined }> };
 
-export default function AgentPage({ params }: PageProps) {
-  const idParam = Array.isArray(params?.id) ? params.id[0] : params?.id;
-  const agent = isAgentId(idParam) ? getAgentById(idParam) : undefined;
+export default async function AgentPage({ params }: PageProps) {
+  const resolved = (await params) ?? {};
+  const idParam = Array.isArray(resolved.id) ? resolved.id[0] : resolved.id;
+  if (!idParam || !isAgentId(idParam)) {
+    return (
+      <main className="min-h-screen flex">
+        <AgentsSidebar />
+        <section className="flex-1 p-6">
+          <p>Agent not found.</p>
+        </section>
+      </main>
+    );
+  }
 
+  const agent = getAgentById(idParam);
   if (!agent) {
     return (
       <main className="min-h-screen flex">
