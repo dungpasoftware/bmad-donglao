@@ -25,20 +25,22 @@ export async function POST(req: NextRequest) {
     const absRequested = path.isAbsolute(reqPath)
       ? reqPath
       : path.join(repoRoot, reqPath);
-    const safePath = sanitizeAndResolvePath(["docs", ".bmad-core"], absRequested);
+    const safePath = await sanitizeAndResolvePath(["docs", ".bmad-core"], absRequested);
     if (dryRun) {
       const result = await dryRunFileWrite(safePath, content);
-      return Response.json(result);
+      const relativeWouldWritePath = path.relative(repoRoot, result.wouldWritePath);
+      return Response.json({ ...result, wouldWritePath: relativeWouldWritePath });
     }
     const write = await writeFileSafely(safePath, content);
+    const relativeWrittenPath = path.relative(repoRoot, write.path);
     // Telemetry: fire and forget (do not block)
-    const host = req.headers.get("host") ?? "localhost:3000";
-    fetch(`http://${host}/api/telemetry/event`, {
+    const telemetryUrl = new URL("/api/telemetry/event", req.url);
+    fetch(telemetryUrl, {
       method: "POST",
       headers: { "content-type": "application/json" },
-      body: JSON.stringify({ event: "file_written", props: { path: write.path, bytes: write.bytesWritten }, ts: Date.now() }),
+      body: JSON.stringify({ event: "file_written", props: { path: relativeWrittenPath, bytes: write.bytesWritten }, ts: Date.now() }),
     }).catch(() => {});
-    return Response.json(write);
+    return Response.json({ path: relativeWrittenPath, bytesWritten: write.bytesWritten });
   } catch (err) {
     const e = err as { status?: number; message?: string };
     const status = typeof e?.status === "number" ? e.status : 500;

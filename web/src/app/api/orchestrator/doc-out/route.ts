@@ -37,21 +37,22 @@ export async function POST(req: NextRequest) {
 
   const repoRoot = getRepoRoot();
   try {
-    const absPath = sanitizeAndResolvePath(["docs"], path.join(repoRoot, relOut));
+    const absPath = await sanitizeAndResolvePath(["docs"], path.join(repoRoot, relOut));
     const content = `# ${templateId.toUpperCase()}\n\nGenerated at ${new Date().toISOString()}\n`;
     const result = await writeFileSafely(absPath, content);
+    const relativePath = path.relative(repoRoot, result.path);
     // Telemetry (non-blocking)
-    const host = req.headers.get("host") ?? "localhost:3000";
-    fetch(`http://${host}/api/telemetry/event`, {
+    const telemetryUrl = new URL("/api/telemetry/event", req.url);
+    fetch(telemetryUrl, {
       method: "POST",
       headers: { "content-type": "application/json" },
       body: JSON.stringify({
         event: "doc_out",
-        props: { templateId, path: result.path },
+        props: { templateId, path: relativePath },
         ts: Date.now(),
       }),
     }).catch(() => {});
-    return Response.json({ status: "ok", path: result.path, bytesWritten: result.bytesWritten });
+    return Response.json({ status: "ok", path: relativePath, bytesWritten: result.bytesWritten });
   } catch (err) {
     const e = err as { status?: number; message?: string };
     const status = typeof e?.status === "number" ? e.status : 500;
